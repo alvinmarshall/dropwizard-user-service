@@ -64,7 +64,7 @@ public class UserDao {
      * @return The created User object with the assigned ID.
      */
     @Transaction
-    public User createUser(User user) {
+    User createUser(User user) {
         return primary.withHandle(handle -> {
             Long createdId = handle.createStatement(INSERT_USER)
                     .bind(0, user.getName())
@@ -88,7 +88,7 @@ public class UserDao {
      * @param userId The ID of the user to retrieve.
      * @return An Optional containing the User object if found, or an empty Optional if the user is not found.
      */
-    public Optional<User> getUser(long userId) {
+    Optional<User> getUser(long userId) {
         return Optional.ofNullable(
                 this.primary.withHandle(handle ->
                         handle.createQuery(GET_USER_BY_ID)
@@ -105,7 +105,7 @@ public class UserDao {
      *
      * @return A List containing User objects representing all the users retrieved from the database.
      */
-    public List<User> getUsers() {
+    List<User> getUsers() {
         return this.primary.withHandle(handle ->
                 handle.createQuery(GET_USERS)
                         .setQueryTimeout(QUERY_TIMEOUT)
