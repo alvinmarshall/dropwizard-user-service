@@ -7,14 +7,12 @@ database:
   driverClass: org.postgresql.Driver
   user: postgres
   password: postgres
-  url: jdbc:postgresql://localhost:5432/users
+  url: jdbc:postgresql://localhost/users
   properties:
     charSet: UTF-8
     hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
   maxWaitForConnection: 1s
   validationQuery: "SELECT 1"
-  minSize: 8
-  maxSize: 32
+  minSize: 1
+  maxSize: 5
   checkConnectionWhileIdle: false
-
-migrationFileLocation: migrations.xml

@@ -7,13 +7,21 @@ import io.dropwizard.db.DataSourceFactory;
 
 public class AppConfiguration extends Configuration {
     private final DataSourceFactory database;
+    private final String migrationFileLocation;
 
     @JsonCreator
-    public AppConfiguration(@JsonProperty("database") DataSourceFactory database) {
+    public AppConfiguration(
+            @JsonProperty("database") DataSourceFactory database,
+            @JsonProperty("migrationFileLocation") String migrationFileLocation) {
         this.database = database;
+        this.migrationFileLocation = migrationFileLocation;
     }
 
     public DataSourceFactory getDatabase() {
         return database;
+    }
+
+    public String getMigrationFileLocation() {
+        return migrationFileLocation;
     }
 }
