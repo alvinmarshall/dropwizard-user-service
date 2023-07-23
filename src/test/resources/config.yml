@@ -1,0 +1,18 @@
+logging:
+  level: INFO
+  loggers:
+    org.cheise_proj: DEBUG
+
+database:
+  driverClass: org.postgresql.Driver
+  user: postgres
+  password: postgres
+  url: jdbc:postgresql://localhost/users
+  properties:
+    charSet: UTF-8
+    hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+  maxWaitForConnection: 1s
+  validationQuery: "SELECT 1"
+  minSize: 1
+  maxSize: 5
+  checkConnectionWhileIdle: false
