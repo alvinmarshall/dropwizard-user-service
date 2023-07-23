@@ -16,3 +16,5 @@ database:
   minSize: 8
   maxSize: 32
   checkConnectionWhileIdle: false
+
+migrationFileLocation: migrations.xml
