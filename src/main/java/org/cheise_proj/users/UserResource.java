@@ -1,5 +1,8 @@
 package org.cheise_proj.users;
 
+import org.cheise_proj.resource.ResourceResponse;
+
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -18,10 +21,15 @@ public class UserResource {
     }
 
     @POST
-    public Response register(UserDto input) {
-        User register = userService.register(input);
+    public Response register(@Valid UserDto input) {
+        User user = userService.register(input);
+        UserCreatedResponse userCreatedResponse = UserCreatedResponse.Builder.builder().id(user.getId()).build();
+        ResourceResponse response = ResourceResponse.Builder.builder()
+                .success(true)
+                .data(userCreatedResponse)
+                .build();
         return Response.status(Response.Status.CREATED)
-                .entity(UserCreatedResponse.Builder.builder().id(register.getId()).build())
+                .entity(response)
                 .build();
     }
 
@@ -29,14 +37,22 @@ public class UserResource {
     @GET
     @Path("/{userId}")
     public Response findById(@PathParam("userId") long userId) {
-        UserResponse response = Optional.of(userService.getUser(userId)).map(UserResponse::toResponse)
+        UserResponse user = Optional.of(userService.getUser(userId)).map(UserResponse::toResponse)
                 .orElse(null);
+        ResourceResponse response = ResourceResponse.Builder.builder()
+                .success(true)
+                .data(user)
+                .build();
         return Response.ok(response).build();
     }
 
     @GET
     public Response findAll() {
         List<UserResponse> responses = userService.getUsers().stream().map(UserResponse::toResponse).collect(Collectors.toList());
-        return Response.ok(responses).build();
+        ResourceResponse users = ResourceResponse.Builder.builder()
+                .success(true)
+                .data(responses)
+                .build();
+        return Response.ok(users).build();
     }
 }

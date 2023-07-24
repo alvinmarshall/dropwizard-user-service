@@ -2,7 +2,7 @@ package org.cheise_proj.users;
 
 import java.io.Serializable;
 
-public class UserResponse implements Serializable {
+ class UserResponse implements Serializable {
     private final Long id;
     private final String name;
     private final String email;
