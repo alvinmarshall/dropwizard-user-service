@@ -1,0 +1,41 @@
+### Register User
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "name": "ss",
+  "email": "james@me.com"
+}
+
+> {%
+    client.test("Request executed successfully", () => {
+        const data = response.body.data
+        client.assert(response.status === 201, "Response status is not 201");
+        client.global.set("user_id", data.id);
+    });
+%}
+
+### Get User By Id
+GET http://localhost:8080/users/{{user_id}}
+
+> {%
+    client.test("Request executed successfully", () => {
+        client.assert(response.status === 200, "Response status is not 200");
+
+    });
+%}
+
+
+### Get Users
+GET http://localhost:8080/users
+
+> {%
+    client.test("Request executed successfully", () => {
+        client.assert(response.status === 200, "Response status is not 200");
+
+    });
+%}
+####
+
+
+
