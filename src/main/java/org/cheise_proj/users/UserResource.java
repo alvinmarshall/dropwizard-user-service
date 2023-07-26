@@ -1,6 +1,11 @@
 package org.cheise_proj.users;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.cheise_proj.resource.ResourceResponse;
+import org.eclipse.jetty.http.HttpStatus;
 
 import javax.validation.Valid;
 import javax.ws.rs.*;
@@ -10,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Api("User Service")
 @Path("users")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -20,6 +26,13 @@ public class UserResource {
         this.userService = userService;
     }
 
+    @ApiOperation("User registration")
+    @ApiResponses({
+            @ApiResponse(code = HttpStatus.CREATED_201, message = "User has been created"),
+            @ApiResponse(code = 422, message = "Entity can't be processed"),
+            @ApiResponse(code = 400, message = "Bad Request sent"),
+            @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500, message = "Internal error"),
+    })
     @POST
     public Response register(@Valid UserDto input) {
         User user = userService.register(input);
@@ -33,7 +46,12 @@ public class UserResource {
                 .build();
     }
 
-
+    @ApiOperation("Get User")
+    @ApiResponses({
+            @ApiResponse(code = HttpStatus.OK_200, message = "Get a User"),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500, message = "Internal error"),
+    })
     @GET
     @Path("/{userId}")
     public Response findById(@PathParam("userId") long userId) {
@@ -46,6 +64,11 @@ public class UserResource {
         return Response.ok(response).build();
     }
 
+    @ApiOperation("Get Users")
+    @ApiResponses({
+            @ApiResponse(code = HttpStatus.OK_200, message = "Get Users"),
+            @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500, message = "Internal error"),
+    })
     @GET
     public Response findAll() {
         List<UserResponse> responses = userService.getUsers().stream().map(UserResponse::toResponse).collect(Collectors.toList());
