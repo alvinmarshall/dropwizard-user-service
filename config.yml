@@ -17,4 +17,13 @@ database:
   maxSize: 32
   checkConnectionWhileIdle: false
 
+
+swagger:
+  resourcePackage: org.cheise_proj
+  title: User API
+  version: v1
+  description: User service API
+  license: Apache 2.0
+  licenseUrl: https://www.apache.org/licenses/LICENSE-2.0
+
 migrationFileLocation: migrations.xml

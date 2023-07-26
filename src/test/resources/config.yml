@@ -16,3 +16,6 @@ database:
   minSize: 1
   maxSize: 5
   checkConnectionWhileIdle: false
+
+swagger:
+  resourcePackage: org.cheise_proj

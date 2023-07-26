@@ -5,6 +5,8 @@ import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.federecio.dropwizard.swagger.SwaggerBundle;
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 
 public class AppApplication extends Application<AppConfiguration> {
 
@@ -25,6 +27,12 @@ public class AppApplication extends Application<AppConfiguration> {
             @Override
             public PooledDataSourceFactory getDataSourceFactory(AppConfiguration appConfiguration) {
                 return appConfiguration.getDatabase();
+            }
+        });
+        bootstrap.addBundle(new SwaggerBundle<AppConfiguration>() {
+            @Override
+            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(AppConfiguration appConfiguration) {
+                return appConfiguration.getSwagger();
             }
         });
     }
