@@ -17,7 +17,7 @@ import java.io.Serializable;
     private final String email;
 
     @JsonCreator
-    public UserDto(@JsonProperty("name") String name, @JsonProperty("email") String email) {
+    public UserDto(@JsonProperty("name") final String name, @JsonProperty("email") final String email) {
         this.name = name;
         this.email = email;
     }

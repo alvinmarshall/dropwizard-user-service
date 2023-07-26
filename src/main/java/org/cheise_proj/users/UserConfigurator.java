@@ -6,12 +6,12 @@ import org.cheise_proj.AppConfiguration;
 import org.skife.jdbi.v2.DBI;
 
 public class UserConfigurator extends AbstractConfigurator {
-    public UserConfigurator(AppConfiguration config, Environment environment) {
+    public UserConfigurator(final AppConfiguration config, final Environment environment) {
         super(config, environment);
     }
 
 
-    public final void build(DBI primary) {
+    public final void build(final DBI primary) {
         final UserDao userDao = new UserDao(primary);
         UserService userService = new UserService(userDao);
         environment.jersey().register(new UserResource(userService));

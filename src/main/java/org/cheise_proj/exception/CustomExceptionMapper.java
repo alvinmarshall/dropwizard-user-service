@@ -7,7 +7,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 
 public class CustomExceptionMapper implements ExceptionMapper<CustomException> {
     @Override
-    public Response toResponse(CustomException e) {
+    public Response toResponse(final CustomException e) {
         ResourceResponse response;
         switch (e.getType()) {
             case INTERNAL_ERROR:

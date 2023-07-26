@@ -5,7 +5,7 @@ import java.util.List;
 public class UserService {
     private final UserDao userDao;
 
-    public UserService(UserDao userDao) {
+    public UserService(final UserDao userDao) {
         this.userDao = userDao;
     }
 

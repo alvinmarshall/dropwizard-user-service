@@ -5,7 +5,7 @@ import org.cheise_proj.AbstractConfigurator;
 import org.cheise_proj.AppConfiguration;
 
 public class CustomExceptionConfigurator extends AbstractConfigurator {
-    public CustomExceptionConfigurator(AppConfiguration config, Environment environment) {
+    public CustomExceptionConfigurator(final AppConfiguration config, final Environment environment) {
         super(config, environment);
     }
 
