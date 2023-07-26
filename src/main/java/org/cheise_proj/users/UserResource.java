@@ -34,7 +34,7 @@ public class UserResource {
             @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500, message = "Internal error"),
     })
     @POST
-    public Response register(@Valid UserDto input) {
+    public Response register(@Valid final UserDto input) {
         User user = userService.register(input);
         UserCreatedResponse userCreatedResponse = UserCreatedResponse.Builder.builder().id(user.getId()).build();
         ResourceResponse response = ResourceResponse.Builder.builder()
@@ -54,7 +54,7 @@ public class UserResource {
     })
     @GET
     @Path("/{userId}")
-    public Response findById(@PathParam("userId") long userId) {
+    public Response findById(@PathParam("userId") final long userId) {
         UserResponse user = Optional.of(userService.getUser(userId)).map(UserResponse::toResponse)
                 .orElse(null);
         ResourceResponse response = ResourceResponse.Builder.builder()

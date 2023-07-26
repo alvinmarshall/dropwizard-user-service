@@ -1,7 +1,5 @@
 package org.cheise_proj.exception;
 
-import javax.lang.model.type.ErrorType;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

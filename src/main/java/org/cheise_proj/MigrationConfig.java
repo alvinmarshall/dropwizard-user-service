@@ -18,7 +18,7 @@ public class MigrationConfig {
     private MigrationConfig() {
     }
 
-    public static void migrate(DataSourceFactory dataSourceFactory, String migrationFileLocation) {
+    public static void migrate(final DataSourceFactory dataSourceFactory, final String migrationFileLocation) {
         LOG.info("Calling Liquibase before starting up...");
         try (Connection connection = DriverManager.getConnection(
                 dataSourceFactory.getUrl(),

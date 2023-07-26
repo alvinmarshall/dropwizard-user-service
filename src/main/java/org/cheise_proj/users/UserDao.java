@@ -64,7 +64,7 @@ public class UserDao {
      * @return The created User object with the assigned ID.
      */
     @Transaction
-    User createUser(User user) {
+    User createUser(final User user) {
         return primary.withHandle(handle -> {
             Long createdId = handle.createStatement(INSERT_USER)
                     .bind(0, user.getName())
@@ -88,7 +88,7 @@ public class UserDao {
      * @param userId The ID of the user to retrieve.
      * @return An Optional containing the User object if found, or an empty Optional if the user is not found.
      */
-    Optional<User> getUser(long userId) {
+    Optional<User> getUser(final long userId) {
         return Optional.ofNullable(
                 this.primary.withHandle(handle ->
                         handle.createQuery(GET_USER_BY_ID)

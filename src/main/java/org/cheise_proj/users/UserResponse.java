@@ -13,7 +13,7 @@ import java.io.Serializable;
         email = builder.email;
     }
 
-    public static UserResponse toResponse(User user) {
+    public static UserResponse toResponse(final User user) {
         return Builder.builder()
                 .id(user.getId())
                 .name(user.getName())

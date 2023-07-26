@@ -13,9 +13,9 @@ public class AppConfiguration extends Configuration {
 
     @JsonCreator
     public AppConfiguration(
-            @JsonProperty("database") DataSourceFactory database,
-            @JsonProperty("migrationFileLocation") String migrationFileLocation,
-            @JsonProperty("swagger") SwaggerBundleConfiguration swagger) {
+            @JsonProperty("database") final DataSourceFactory database,
+            @JsonProperty("migrationFileLocation") final String migrationFileLocation,
+            @JsonProperty("swagger") final SwaggerBundleConfiguration swagger) {
         this.database = database;
         this.migrationFileLocation = migrationFileLocation;
         this.swagger = swagger;
