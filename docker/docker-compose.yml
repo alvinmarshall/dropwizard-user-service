@@ -34,6 +34,18 @@ services:
     depends_on:
       - graphite
 
+  prometheus-exporter:
+    image: prom/pushgateway:v1.5.0
+    ports:
+      - "9091:9091"
+
+  prometheus:
+    image: prom/prometheus:v2.37.9
+    command: "--config.file=/etc/prometheus/prometheus.yml --web.enable-lifecycle"
+    ports:
+      - "9090:9090"
+    volumes:
+      - $PWD/prometheus_data/prometheus.yml:/etc/prometheus/prometheus.yml:ro
   user-service:
     build:
       context: ../
@@ -50,3 +62,4 @@ services:
     depends_on:
       - db
       - graphite
+      - prometheus-exporter
