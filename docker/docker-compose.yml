@@ -9,3 +9,25 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: users
+
+  graphite:
+    image: graphiteapp/graphite-statsd:1.1.10-5
+    container_name: graphite
+    ports:
+      - "80:80"
+      - "2003-2004:2003-2004"
+      - "2023-2024:2023-2024"
+      - "8125:8125/udp"
+      - "8126:8126"
+  #    volumes:
+  #      - $PWD/graphite_data:/opt/graphite/storage
+
+  grafana:
+    image: grafana/grafana:10.0.3
+    ports:
+      - "3000:3000"
+    volumes:
+      #      - $PWD/grafana_data:/var/lib/grafana
+      - $PWD/grafana_data/dashboards:/var/lib/grafana/dashboards
+      - $PWD/grafana_data/grafana-dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
+      - $PWD/grafana_data/grafana-datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
