@@ -1,5 +1,7 @@
 package org.cheise_proj.users;
 
+import com.codahale.metrics.annotation.ExceptionMetered;
+import com.codahale.metrics.annotation.Timed;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -33,6 +35,8 @@ public class UserResource {
             @ApiResponse(code = 400, message = "Bad Request sent"),
             @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500, message = "Internal error"),
     })
+    @Timed
+    @ExceptionMetered
     @POST
     public Response register(@Valid final UserDto input) {
         User user = userService.register(input);
@@ -52,6 +56,8 @@ public class UserResource {
             @ApiResponse(code = 404, message = "User not found"),
             @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500, message = "Internal error"),
     })
+    @Timed
+    @ExceptionMetered
     @GET
     @Path("/{userId}")
     public Response findById(@PathParam("userId") final long userId) {
@@ -69,6 +75,8 @@ public class UserResource {
             @ApiResponse(code = HttpStatus.OK_200, message = "Get Users"),
             @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500, message = "Internal error"),
     })
+    @Timed
+    @ExceptionMetered
     @GET
     public Response findAll() {
         List<UserResponse> responses = userService.getUsers().stream().map(UserResponse::toResponse).collect(Collectors.toList());
