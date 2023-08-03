@@ -41,6 +41,7 @@ public class AppApplication extends Application<AppConfiguration> {
     public void run(final AppConfiguration configuration, final Environment environment) {
         MigrationConfig.migrate(configuration.getDatabase(), configuration.getMigrationFileLocation());
         buildComponentFactory(configuration, environment).buildAll();
+
     }
 
     protected ComponentFactory buildComponentFactory(final AppConfiguration config, final Environment environment) {
