@@ -3,6 +3,7 @@ package org.cheise_proj;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Environment;
 import org.cheise_proj.exception.CustomExceptionConfigurator;
+import org.cheise_proj.metrics.GraphiteReporterConfigurator;
 import org.cheise_proj.users.UserConfigurator;
 import org.skife.jdbi.v2.DBI;
 
@@ -18,6 +19,11 @@ public class ComponentFactory extends AbstractConfigurator {
         final DBI primary = buildDBI();
         configureUser(primary);
         configureException();
+        configureGraphiteReporter();
+    }
+
+    private void configureGraphiteReporter() {
+        new GraphiteReporterConfigurator(config, environment).build();
     }
 
     private void configureUser(final DBI primary) {

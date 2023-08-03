@@ -27,3 +27,8 @@ swagger:
   licenseUrl: https://www.apache.org/licenses/LICENSE-2.0
 
 migrationFileLocation: migrations.xml
+
+graphite:
+  serverUrl: localhost
+  port: 2003
+  reportInterval: 10

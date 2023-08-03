@@ -19,3 +19,8 @@ database:
 
 swagger:
   resourcePackage: org.cheise_proj
+
+graphite:
+  serverUrl: localhost
+  port: 2003
+  reportInterval: 10
