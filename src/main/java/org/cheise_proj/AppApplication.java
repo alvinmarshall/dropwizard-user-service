@@ -1,6 +1,8 @@
 package org.cheise_proj;
 
 import io.dropwizard.Application;
+import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
+import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -35,6 +37,13 @@ public class AppApplication extends Application<AppConfiguration> {
                 return appConfiguration.getSwagger();
             }
         });
+        // Enable variable substitution with environment variables
+        bootstrap.setConfigurationSourceProvider(
+                new SubstitutingSourceProvider(
+                        bootstrap.getConfigurationSourceProvider(),
+                        new EnvironmentVariableSubstitutor(false)
+                )
+        );
     }
 
     @Override
