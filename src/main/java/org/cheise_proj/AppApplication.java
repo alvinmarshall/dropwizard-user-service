@@ -25,6 +25,13 @@ public class AppApplication extends Application<AppConfiguration> {
 
     @Override
     public void initialize(final Bootstrap<AppConfiguration> bootstrap) {
+        // Enable variable substitution with environment variables
+        bootstrap.setConfigurationSourceProvider(
+                new SubstitutingSourceProvider(
+                        bootstrap.getConfigurationSourceProvider(),
+                        new EnvironmentVariableSubstitutor(false)
+                )
+        );
         bootstrap.addBundle(new MigrationsBundle<AppConfiguration>() {
             @Override
             public PooledDataSourceFactory getDataSourceFactory(AppConfiguration appConfiguration) {
@@ -37,13 +44,6 @@ public class AppApplication extends Application<AppConfiguration> {
                 return appConfiguration.getSwagger();
             }
         });
-        // Enable variable substitution with environment variables
-        bootstrap.setConfigurationSourceProvider(
-                new SubstitutingSourceProvider(
-                        bootstrap.getConfigurationSourceProvider(),
-                        new EnvironmentVariableSubstitutor(false)
-                )
-        );
     }
 
     @Override
