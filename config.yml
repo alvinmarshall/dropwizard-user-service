@@ -5,9 +5,9 @@ logging:
 
 database:
   driverClass: org.postgresql.Driver
-  user: postgres
-  password: postgres
-  url: jdbc:postgresql://localhost:5432/users
+  user: ${DATABASE_USER:-postgres}
+  password: ${DATABASE_PASSWORD:-postgres}
+  url: ${DATABASE_HOST:-jdbc:postgresql://localhost:5432/users}
   properties:
     charSet: UTF-8
     hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -29,6 +29,6 @@ swagger:
 migrationFileLocation: migrations.xml
 
 graphite:
-  serverUrl: localhost
-  port: 2003
-  reportInterval: 10
+  serverUrl: ${GRAPHITE_ENDPOINT:-localhost}
+  port: ${GRAPHITE_PORT:-2003}
+  reportInterval: ${GRAPHITE_REPORT_INTERVAL:-10}
