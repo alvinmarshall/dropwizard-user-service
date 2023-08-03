@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
-class UserResourceIT extends IntegrationTest {
+class UserResourceIntegrationTest extends IntegrationTest {
 
     private Client client;
 
