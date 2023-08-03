@@ -31,3 +31,22 @@ services:
       - $PWD/grafana_data/dashboards:/var/lib/grafana/dashboards
       - $PWD/grafana_data/grafana-dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
       - $PWD/grafana_data/grafana-datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+    depends_on:
+      - graphite
+
+  user-service:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      GRAPHITE_ENDPOINT: graphite
+      GRAPHITE_PORT: 2003
+      GRAPHITE_REPORT_INTERVAL: 10
+      DATABASE_HOST: jdbc:postgresql://db/users
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+    depends_on:
+      - db
+      - graphite
