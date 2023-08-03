@@ -9,6 +9,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
+import org.cheise_proj.metrics.PrometheusRegistry;
 
 public class AppApplication extends Application<AppConfiguration> {
 
@@ -49,8 +50,8 @@ public class AppApplication extends Application<AppConfiguration> {
     @Override
     public void run(final AppConfiguration configuration, final Environment environment) {
         MigrationConfig.migrate(configuration.getDatabase(), configuration.getMigrationFileLocation());
+        PrometheusRegistry.init(environment);
         buildComponentFactory(configuration, environment).buildAll();
-
     }
 
     protected ComponentFactory buildComponentFactory(final AppConfiguration config, final Environment environment) {
