@@ -4,42 +4,28 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class GraphiteConfig {
-    private String serverUrl;
-    private int port;
-    private int reportInterval;
+    private final String serverUrl;
+    private final int port;
+    private final int reportInterval;
 
     @JsonCreator
     public GraphiteConfig(
             @JsonProperty("serverUrl") String serverUrl,
-            @JsonProperty("port") int port,
-            @JsonProperty("reportInterval") int reportInterval
+            @JsonProperty("port") String port,
+            @JsonProperty("reportInterval") String reportInterval
     ) {
         this.serverUrl = serverUrl;
-        this.port = port;
-        this.reportInterval = reportInterval;
+        this.port = Integer.parseInt(port);
+        this.reportInterval = Integer.parseInt(reportInterval);
     }
 
     public String getServerUrl() {
         return serverUrl;
     }
-
-    public void setServerUrl(String serverUrl) {
-        this.serverUrl = serverUrl;
-    }
-
     public int getPort() {
         return port;
     }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
-
     public int getReportInterval() {
         return reportInterval;
-    }
-
-    public void setReportInterval(int reportInterval) {
-        this.reportInterval = reportInterval;
     }
 }
