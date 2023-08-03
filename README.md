@@ -1,4 +1,4 @@
-# User-Service
+# User-Service [![Pull Request Build](https://github.com/alvinmarshall/dropwizard-user-service/actions/workflows/pr-build.yaml/badge.svg)](https://github.com/alvinmarshall/dropwizard-user-service/actions/workflows/pr-build.yaml)
 
 How to start the App application
 ---
