@@ -24,3 +24,7 @@ graphite:
   serverUrl: localhost
   port: 2003
   reportInterval: 10
+
+artemis:
+  brokers: "localhost"
+  failOverArgs: ""

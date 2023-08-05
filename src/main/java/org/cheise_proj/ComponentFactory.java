@@ -4,6 +4,7 @@ import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Environment;
 import org.cheise_proj.exception.CustomExceptionConfigurator;
 import org.cheise_proj.metrics.GraphiteReporterConfigurator;
+import org.cheise_proj.pubsub.ArtemisClient;
 import org.cheise_proj.users.UserConfigurator;
 import org.skife.jdbi.v2.DBI;
 
@@ -17,17 +18,23 @@ public class ComponentFactory extends AbstractConfigurator {
 
     public void buildAll() {
         final DBI primary = buildDBI();
-        configureUser(primary);
+        final ArtemisClient artemisClient = configureArtemisClient();
+        configureUser(primary, artemisClient);
         configureException();
         configureGraphiteReporter();
+    }
+
+    private ArtemisClient configureArtemisClient() {
+        return config.getArtemisConfig()
+                .artemisClient(environment.lifecycle(), environment.metrics(), environment.getObjectMapper());
     }
 
     private void configureGraphiteReporter() {
         new GraphiteReporterConfigurator(config, environment).build();
     }
 
-    private void configureUser(final DBI primary) {
-        new UserConfigurator(config, environment).build(primary);
+    private void configureUser(final DBI primary, ArtemisClient artemisClient) {
+        new UserConfigurator(config, environment).build(primary, artemisClient);
     }
 
     private void configureException() {

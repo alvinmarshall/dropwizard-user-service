@@ -46,6 +46,19 @@ services:
       - "9090:9090"
     volumes:
       - $PWD/prometheus_data/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+  artemis:
+    image: symptoma/activemq:latest
+    ports:
+      - "61616:61616"
+      - "8161:8161"
+    environment:
+      ACTIVEMQ_DISALLOW_WEBCONSOLE: "false"
+      ACTIVEMQ_USERNAME: myactivemquser
+      ACTIVEMQ_PASSWORD: myactivemquserpass
+      ACTIVEMQ_WEBADMIN_USERNAME: roos
+      ACTIVEMQ_WEBADMIN_PASSWORD: TestTest
+
   user-service:
     build:
       context: ../
