@@ -6,23 +6,27 @@ import io.dropwizard.Configuration;
 import io.dropwizard.db.DataSourceFactory;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import org.cheise_proj.metrics.GraphiteConfig;
+import org.cheise_proj.pubsub.ArtemisConfig;
 
 public class AppConfiguration extends Configuration {
     private final DataSourceFactory database;
     private final String migrationFileLocation;
     private final SwaggerBundleConfiguration swagger;
     private final GraphiteConfig graphiteConfig;
+    private final ArtemisConfig artemisConfig;
 
     @JsonCreator
     public AppConfiguration(
             @JsonProperty("database") final DataSourceFactory database,
             @JsonProperty("migrationFileLocation") final String migrationFileLocation,
             @JsonProperty("swagger") final SwaggerBundleConfiguration swagger,
-            @JsonProperty("graphite") GraphiteConfig graphiteConfig) {
+            @JsonProperty("graphite") final GraphiteConfig graphiteConfig,
+            @JsonProperty("artemis") final ArtemisConfig artemisConfig) {
         this.database = database;
         this.migrationFileLocation = migrationFileLocation;
         this.swagger = swagger;
         this.graphiteConfig = graphiteConfig;
+        this.artemisConfig = artemisConfig;
     }
 
     public DataSourceFactory getDatabase() {
@@ -39,5 +43,9 @@ public class AppConfiguration extends Configuration {
 
     public GraphiteConfig getGraphiteConfig() {
         return graphiteConfig;
+    }
+
+    public ArtemisConfig getArtemisConfig() {
+        return artemisConfig;
     }
 }

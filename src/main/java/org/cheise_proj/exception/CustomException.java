@@ -36,6 +36,12 @@ public class CustomException extends RuntimeException {
         this.errors = errors;
     }
 
+    public CustomException(Throwable cause, ExceptionType type, String referenceId) {
+        super(cause.getMessage(), cause);
+        this.type = type;
+        this.referenceId = referenceId;
+        this.errors = buildError(cause.getMessage());
+    }
 
     public ExceptionType getType() {
         return type;

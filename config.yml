@@ -32,3 +32,7 @@ graphite:
   serverUrl: ${GRAPHITE_ENDPOINT:-localhost}
   port: ${GRAPHITE_PORT:-2003}
   reportInterval: ${GRAPHITE_REPORT_INTERVAL:-10}
+
+artemis:
+  brokers: ${ARTEMIS_BROKER_HOSTS:-tcp://localhost:61616}
+  failOverArgs: ${ARTEMIS_FAILOVER_ARGS:-ha=true&retryInterval=100&retryIntervalMultiplier=2&maxRetryInterval=2000&reconnectAttempts=6&initialConnectAttempts=6}
