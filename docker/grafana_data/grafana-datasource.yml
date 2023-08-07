@@ -6,3 +6,9 @@ datasources:
     url: http://graphite:80
     isDefault: true
     editable: false
+
+  - name: k6influxdb
+    type: influxdb
+    access: proxy
+    database: k6
+    url: http://influxdb:8086
