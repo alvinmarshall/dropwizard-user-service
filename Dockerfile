@@ -1,4 +1,4 @@
-FROM maven:3.9.3-eclipse-temurin-8 AS build
+FROM maven:3.9.2-eclipse-temurin-8-focal AS build
 COPY src /app/src
 COPY pom.xml /app
 COPY config.yml /app
