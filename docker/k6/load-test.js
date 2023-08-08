@@ -1,91 +1,65 @@
 import http from 'k6/http';
-import {group, sleep} from 'k6';
+import {sleep} from 'k6';
 
 const usersToRegisterJson = JSON.parse(open("./data.json"));
 
-// export let options = {
-//     stages: [
-//         {duration: '1m', target: 10},   // Ramp up to 10 virtual users over 1 minute
-//         {duration: '2m', target: 10},   // Stay at 10 virtual users for 3 minutes
-//         {duration: '1m', target: 0},    // Ramp down to 0 virtual users over 1 minute
-//     ],
-// };
+const BASE_URL = 'http://user-service:8080';
 
+const registeredUsers = usersToRegisterJson
 export let options = {
     scenarios: {
         registration: {
-            executor: 'constant-arrival-rate',
-            rate: 5,  // Requests per second
-            duration: '1m',
-            preAllocatedVUs: 10,
-            maxVUs: 20,
-        },
-        getAllUsers: {
             executor: 'ramping-vus',
+            exec: 'registerUser',
             startVUs: 0,
             stages: [
                 {duration: '1m', target: 20},
-                // Add more stages as needed
+                {duration: '2m', target: 10},
+                {duration: '1m', target: 0}
             ],
         },
         getUserByID: {
             executor: 'ramping-vus',
+            exec: 'getUserById',
             startVUs: 0,
+            startTime: '1m',
             stages: [
-                {duration: '1m', target: 10},
-                // Add more stages as needed
+                {duration: '1m', target: 20},
+                {duration: '2m', target: 10},
+                {duration: '1m', target: 0}
             ],
         },
+        getAllUsers: {
+            executor: 'ramping-vus',
+            exec: 'getUsers',
+            startVUs: 0,
+            stages: [
+                {duration: '1m', target: 20},
+                {duration: '2m', target: 10},
+                {duration: '1m', target: 0}
+            ],
+        },
+
     },
 };
 
-
-const BASE_URL = 'http://user-service:8080';
-
-// Keep track of registered emails to avoid duplicates
-let registeredEmails = new Set();
-let usersIds = [];
-let registeredUsers = usersToRegisterJson
-
-export default function () {
-
-    if (__ITER === 0) {
-        group('Scenario: Registration', () => {
-            for (let user of registeredUsers) {
-                // Check if the email is not already registered
-                if (!registeredEmails.has(user.email)) {
-                    // Endpoint 1: Register User
-                    let payload = user;
-                    let headers = {'Content-Type': 'application/json'};
-                    let response = http.post(`${BASE_URL}/users`, JSON.stringify(payload), {headers});
-
-                    // If registration was successful, add the email to the registeredEmails set
-                    if (response.status === 200) {
-                        registeredEmails.add(user.email);
-                        usersIds.push(response.body.data.id);
-                    }
-                }
-
-                sleep(1);
-            }
-        });
+export function registerUser() {
+    for (let user of registeredUsers) {
+        let payload = user;
+        let headers = {'Content-Type': 'application/json'};
+        http.post(`${BASE_URL}/users`, JSON.stringify(payload), {headers});
+        sleep(1);
     }
+}
 
-    if (__ITER === 1) {
-        group('Scenario: Get All Users', () => {
-            http.get(`${BASE_URL}/users`);
-        });
-    }
+export function getUserById() {
+    const userId = Math.floor(Math.random() * registeredUsers.length);
+    http.get(`${BASE_URL}/users/${userId}`);
+    sleep(1);
+}
 
-    if (__ITER === 2) {
-        group('Scenario: Get User by ID', () => {
-            let randomIndex = Math.floor(Math.random() * usersIds.length);
-            let userId = usersIds[randomIndex];
-            http.get(`${BASE_URL}/users/${userId}`);
-        });
-    }
 
-    // Other scenarios and load test logic
-
-    sleep(1);  // Add a short delay between iterations
+export function getUsers() {
+    http.get(`${BASE_URL}/users`);
+    sleep(1)
 }
